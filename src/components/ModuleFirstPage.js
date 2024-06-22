@@ -1,15 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react'
-import NoteContext from "../context/NoteContext"
+import React, { useEffect, useState } from 'react'
+
 
 export default function ModuleFirstPage(props) {
 
     const [monthYear, setMonthYear] = useState([])
     const [selectedMonth, setSelectedMonth] = useState('')
-    const context = useContext(NoteContext);
-
-    const {pendingEmployee } = context;
-
-    
 
     useEffect(() => {
         const currentDate = new Date();
@@ -28,7 +23,7 @@ export default function ModuleFirstPage(props) {
 
         setMonthYear(generateMonths)
         setSelectedMonth(generateMonths[0])
-        pendingEmployee(generateMonths[0])
+        //pendingEmployee(generateMonths[0])
 
         // eslint-disable-next-line
     }, [])
@@ -36,44 +31,42 @@ export default function ModuleFirstPage(props) {
     const handleDropdownChange = (event) => {
         const selectedValue = event.target.value
         setSelectedMonth('');
-        setTimeout(() => { 
+        setTimeout(() => {
             setSelectedMonth(selectedValue);
-            pendingEmployee(selectedValue);
+            //pendingEmployee(selectedValue);
             props.onDropdownChange(selectedValue);
-            
+
         }, 50);
-        
-        
-      };
+
+
+    };
 
     return (
-        <div className="left-content">
-            <form className='mx-3 my-5'>
-                <div className="col-md-4" >
-                    
-                    <select id="monthYear" className="form-select" style={{ cursor: 'pointer', width: '200px' }} name="monthYear" onChange={handleDropdownChange} value={selectedMonth}>
+        <>
+            <div className="col" >
+                <form>
+                    <select id="monthYear" className="form-select form-select-sm" aria-label="Default select example" style={{ cursor: 'pointer'}} name="monthYear" onChange={handleDropdownChange} value={selectedMonth}>
                         {monthYear.map((item, index) => (
                             <option value={item} key={index}>{item}</option>
                         ))}
                     </select>
-                </div>
-            </form>
-            <div className="desc-container">
-                <div className="heading">
-                    <h1>{props.Title}</h1>
-                </div>
-                <div>
-                    <button className="btn btn-outline-primary mx-3" id="Update" onClick={props.Onclick}>Update List</button>
+                </form>
+
+
+                <div className="col">
+                    <h1 >{props.Title}</h1>
+                    <div >
+                        {localStorage.getItem('token')?
+                            <button className="btn btn-outline-primary" id="Update" onClick={props.Onclick}>Update List</button>
+                            : <></>
+                        }
+                        <button className="btn btn-outline-primary" id="Email" onClick={props.onClickExcel}>Export Excel</button>
+                    </div>
+
                 </div>
 
-                <div>
-                    <button className="btn btn-outline-primary mx-3 my-2" id="Email" onClick={props.OnclickEmail}>Send Email</button>
-                </div>
-
-                <div>
-                    <button className="btn btn-outline-primary mx-3" id="Email" onClick={props.onClickExcel}>Export Excel</button>
-                </div>
             </div>
-        </div>
+        </>
+
     )
 }

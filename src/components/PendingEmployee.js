@@ -17,16 +17,21 @@ export default function PendingEmployee(props) {
     return (
 
         <>
-            <div className="card my-2" style={{height:'200px'}}>
+            <div className="card my-2" style={{ height: '200px' }}>
                 <h5 className="card-header">{pEmployee.empCode}</h5>
                 <div className="card-body">
                     <h5 className="card-title">{pEmployee.empName}</h5>
                     <p className="card-text">{formattedDate}</p>
+                    {localStorage.getItem('token')?
+                        pEmployee.status === 'Pending' ? <i className="fa-sharp fa-regular fa-pen-to-square mx-2" 
+                            style={{ cursor: "pointer" }} onClick={() => { updateDate(pEmployee) }}> </i> 
+                                    : <i></i>
+                        : <></>
+                    }
                     
-                     {pEmployee.status==='Pending'?<i className="fa-sharp fa-regular fa-pen-to-square mx-2" style={{ cursor: "pointer" }} onClick={() => { updateDate(pEmployee) }}></i>:<i></i>}
                 </div>
             </div>
-            
+
         </>
     )
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useContext } from 'react'
 import NoteContext from "../context/NoteContext"
 import ModuleFirstPage from './ModuleFirstPage';
 
-const Home = ({ showAlert }) => {
+const Home = ({ toastmsg }) => {
 
     const context = useContext(NoteContext);
     const { notes, pendingEmployee, workedEmployee } = context;
@@ -27,7 +27,7 @@ const Home = ({ showAlert }) => {
 
 
     const handleClickSubmit = () => {
-        showAlert("Nice pic dear", "success")
+        toastmsg("Nice pic dear", "success")
     }
 
     const handlePending = (teamType) => {
